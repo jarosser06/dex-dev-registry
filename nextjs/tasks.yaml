@@ -1,0 +1,42 @@
+version: "1.0"
+
+tasks:
+  next-dev:
+    description: "Start Next.js development server"
+    command: "npx next dev {{if .port}}-p {{.port}}{{end}}"
+    type: oneshot
+    parameters:
+      port:
+        type: string
+        required: false
+        description: "Port number (default: 3000)"
+
+  next-build:
+    description: "Build Next.js application for production"
+    command: "npx next build"
+    type: oneshot
+
+  next-start:
+    description: "Start Next.js production server"
+    command: "npx next start {{if .port}}-p {{.port}}{{end}}"
+    type: oneshot
+    parameters:
+      port:
+        type: string
+        required: false
+        description: "Port number (default: 3000)"
+
+  next-lint:
+    description: "Run Next.js ESLint"
+    command: "npx next lint {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for next lint"
+
+  type-check:
+    description: "Run TypeScript type checking"
+    command: "npx tsc --noEmit"
+    type: oneshot

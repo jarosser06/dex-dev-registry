@@ -1,0 +1,15 @@
+# --- dex managed (do not edit) ---
+.dex/
+dex.lock
+.claude/skills/base-dev-commit-messages/SKILL.md
+.claude/agents/base-dev-cicd.md
+.claude/skills/dex-builder-dex-builder/SKILL.md
+# --- end dex managed ---
+
+*.tar.gz
+
+# Build artifacts
+build/
+
+# Infrastructure generated files
+infrastructure/config.sh

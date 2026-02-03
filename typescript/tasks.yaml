@@ -1,0 +1,62 @@
+version: "1.0"
+
+tasks:
+  test:
+    description: "Run Jest tests"
+    command: "npx jest {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for Jest (e.g., --coverage, --watch, file paths)"
+
+  test-watch:
+    description: "Run Jest in watch mode"
+    command: "npx jest --watch {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for Jest"
+
+  test-coverage:
+    description: "Run Jest with coverage report"
+    command: "npx jest --coverage {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for Jest"
+
+  lint:
+    description: "Run ESLint"
+    command: "npx eslint {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for ESLint (e.g., file paths, patterns)"
+
+  lint-fix:
+    description: "Run ESLint with auto-fix"
+    command: "npx eslint --fix {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional arguments for ESLint"
+
+  type-check:
+    description: "Run TypeScript type checking"
+    command: "npx tsc --noEmit {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Additional TypeScript compiler arguments"

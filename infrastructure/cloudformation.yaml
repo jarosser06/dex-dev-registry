@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Public S3 bucket for dex registry'
+
+Parameters:
+  ProjectName:
+    Type: String
+    Description: Project name used for resource naming
+  Environment:
+    Type: String
+    Description: Environment name (e.g., production, staging)
+
+Metadata:
+  Tags:
+    - Key: Project
+      Value: !Ref ProjectName
+    - Key: Environment
+      Value: !Ref Environment
+    - Key: ManagedBy
+      Value: CloudFormation
+    - Key: Purpose
+      Value: DexRegistry
+
+Resources:
+  RegistryBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${ProjectName}-${Environment}-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      VersioningConfiguration:
+        Status: Enabled
+      WebsiteConfiguration:
+        IndexDocument: registry.json
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+        - Key: Purpose
+          Value: DexRegistry
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref RegistryBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Sub '${RegistryBucket.Arn}/*'
+
+Outputs:
+  BucketName:
+    Description: Name of the S3 bucket
+    Value: !Ref RegistryBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-BucketName'
+
+  RegistryURL:
+    Description: S3 bucket URL for registry
+    Value: !GetAtt RegistryBucket.WebsiteURL
+    Export:
+      Name: !Sub '${AWS::StackName}-RegistryURL'
+
+  S3URL:
+    Description: Direct S3 URL
+    Value: !Sub 'https://${RegistryBucket}.s3.${AWS::Region}.amazonaws.com'
+    Export:
+      Name: !Sub '${AWS::StackName}-S3URL'

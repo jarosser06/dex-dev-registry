@@ -1,0 +1,52 @@
+version: "1.0"
+
+tasks:
+  deploy-infra:
+    description: Deploy AWS infrastructure (S3 + CloudFormation)
+    command: ./infrastructure/deploy.sh
+    cwd: .
+
+  package:
+    description: Package all dex plugins into tarballs and generate registry.json
+    command: ./scripts/package.sh
+    cwd: .
+
+  deploy:
+    description: Package and deploy all plugins to S3 registry
+    command: ./deploy.sh
+    cwd: .
+
+  deploy-clean:
+    description: Clean build and deploy all plugins to S3 registry
+    command: ./deploy.sh --clean
+    cwd: .
+
+  deploy-all:
+    description: Deploy infrastructure and all plugins
+    command: ./deploy.sh --infra
+    cwd: .
+
+  verify-registry:
+    description: Check registry.json contents on S3
+    command: |
+      source infrastructure/config.sh
+      curl -s "$REGISTRY_URL/registry.json" | jq .
+    cwd: .
+    shell: bash
+
+  list-packages:
+    description: List all packages in the registry
+    command: |
+      source infrastructure/config.sh
+      curl -s "$REGISTRY_URL/registry.json" | jq -r '.packages | keys[]'
+    cwd: .
+    shell: bash
+
+  check-package:
+    description: Check if a specific package version exists in S3
+    command: |
+      source infrastructure/config.sh
+      PACKAGE_FILE="$1"
+      curl -I "$REGISTRY_URL/$PACKAGE_FILE" 2>&1 | head -1
+    cwd: .
+    shell: bash
