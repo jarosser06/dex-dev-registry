@@ -3,6 +3,10 @@ dex-dev-registry
 
 My personal S3 hosted package registry for reusable AI context management.
 
+Requirements:
+- [Dev Toolkit MCP installed](https://github.com/jarosser06/dev-toolkit-mcp)
+- [Dex Installed](https://github.com/LaunchCG/dex)
+
 ## Usage
 
 ### Add Registry
