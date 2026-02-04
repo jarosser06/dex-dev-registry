@@ -1,6 +1,6 @@
 package {
   name        = "docker-compose"
-  version     = "0.2.1"
+  version     = "0.2.2"
   description = "Docker Compose skill with MCP task automation"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -31,7 +31,7 @@ mcp_server "docker-compose-tasks" {
 
 claude_settings "mcp-permissions" {
   allow = [
-    "mcp__docker-compose-tasks"
+    "mcp__docker-compose-tasks__*"
   ]
 }
 

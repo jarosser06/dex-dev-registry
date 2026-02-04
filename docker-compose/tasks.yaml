@@ -8,13 +8,18 @@ tasks:
 
   view-logs:
     description: "View logs for a Docker Compose service"
-    command: "docker-compose logs {{.service}}"
+    command: "docker-compose logs --tail {{.lines}} {{.service}}"
     type: oneshot
     parameters:
       service:
         type: string
         required: true
         description: "Name of the service"
+      lines:
+        type: string
+        required: false
+        default: "all"
+        description: "Number of lines to show (e.g., '100' or 'all')"
 
   exec-command:
     description: "Execute command in a Docker Compose service container"

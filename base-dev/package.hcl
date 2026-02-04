@@ -1,6 +1,6 @@
 package {
   name        = "base-dev"
-  version     = "0.3.0"
+  version     = "0.3.1"
   description = "Base development toolkit with commit standards, linting rules, CI/CD automation, and development MCP servers"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -39,10 +39,9 @@ claude_subagent "cicd" {
 
 claude_settings "mcp-permissions" {
   allow = [
-    "mcp__dev-toolkit-mcp",
-    "mcp__serena",
-    "mcp__context7",
-    "mcp__github"
+    "mcp__serena__*",
+    "mcp__context7__*",
+    "mcp__github__*"
   ]
 }  
 

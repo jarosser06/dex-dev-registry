@@ -1,6 +1,6 @@
 package {
   name        = "typescript"
-  version     = "0.2.1"
+  version     = "0.2.2"
   description = "TypeScript development toolkit with linting, testing, and E2E validation using Chrome DevTools MCP"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -45,8 +45,8 @@ mcp_server "chrome-devtools" {
 
 claude_settings "mcp-permissions" {
   allow = [
-    "mcp__chrome-devtools",
-    "mcp__typescript-tasks"
+    "mcp__chrome-devtools__*",
+    "mcp__typescript-tasks__*"
   ]
 }
 
