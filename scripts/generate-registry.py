@@ -33,8 +33,18 @@ def main():
         print(json.dumps({"packages": {}}, indent=2))
         return
 
+    # Load existing registry if it exists
     packages = {}
+    existing_registry_path = build_dir / "registry-existing.json"
+    if existing_registry_path.exists():
+        try:
+            with open(existing_registry_path) as f:
+                existing = json.load(f)
+                packages = existing.get("packages", {})
+        except (json.JSONDecodeError, IOError):
+            pass  # Start fresh if existing registry is corrupted
 
+    # Add/update packages from current build
     for tarball in sorted(build_dir.glob("*.tar.gz")):
         name, version = parse_package_filename(tarball.name)
 
@@ -45,7 +55,10 @@ def main():
                     "latest": version
                 }
 
-            packages[name]["versions"].append(version)
+            # Add version if not already present
+            if version not in packages[name]["versions"]:
+                packages[name]["versions"].append(version)
+
             # Update latest to the highest version (assumes sorted order)
             packages[name]["latest"] = version
 

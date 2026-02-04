@@ -51,6 +51,16 @@ if [ "$CLEAN" = true ]; then
   echo
 fi
 
+# Download existing registry.json from S3 to preserve old versions
+echo "==> Downloading existing registry.json from S3..."
+mkdir -p build/
+if aws s3 cp "s3://$BUCKET_NAME/registry.json" build/registry-existing.json 2>/dev/null; then
+  echo "✓ Found existing registry.json"
+else
+  echo "ℹ No existing registry.json found (this is normal for first deployment)"
+fi
+echo
+
 # Package dex packages
 echo "==> Packaging dex packages..."
 ./scripts/package.sh
