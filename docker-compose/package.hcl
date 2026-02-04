@@ -1,6 +1,6 @@
 package {
   name        = "docker-compose"
-  version     = "0.2.0"
+  version     = "0.2.1"
   description = "Docker Compose skill with MCP task automation"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -8,6 +8,11 @@ package {
 claude_skill "docker-compose" {
   description = "Docker Compose configuration and multi-container orchestration"
   content     = file("skills/docker-compose/SKILL.md")
+}
+
+claude_rule "docker-compose-rule" {
+  description = "Enforce MCP usage"
+  content = "You must use the docker compose tasks MCP tools for all docker compose operations. Never run docker compose commands directly via Bash."
 }
 
 file "tasks" {
@@ -26,7 +31,7 @@ mcp_server "docker-compose-tasks" {
 
 claude_settings "mcp-permissions" {
   allow = [
-    "mcp__dev-toolkit-mcp"
+    "mcp__docker-compose-tasks"
   ]
 }
 
