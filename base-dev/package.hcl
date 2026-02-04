@@ -1,6 +1,6 @@
 package {
   name        = "base-dev"
-  version     = "0.2.0"
+  version     = "0.3.0"
   description = "Base development toolkit with commit standards, linting rules, CI/CD automation, and development MCP servers"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -37,6 +37,15 @@ claude_subagent "cicd" {
   content     = file("agents/cicd.md")
 }
 
+claude_settings "mcp-permissions" {
+  allow = [
+    "mcp__dev-toolkit-mcp",
+    "mcp__serena",
+    "mcp__context7",
+    "mcp__github"
+  ]
+}  
+
 mcp_server "serena" {
   description = "IDE assistant with project context"
   command     = "uvx"
@@ -58,13 +67,13 @@ mcp_server "context7" {
   args        = ["-y", "@upstash/context7-mcp"]
 }
 
-mcp_server "dev-toolkit-mcp" {
-  description = "Development toolkit with task management"
-  command     = "dev-toolkit-mcp"
-  args = [
-    "-config",
-    ".mcp-tasks.yaml"
-  ]
+mcp_server "github" {
+  description = "Github MCP server"
+  command = "npx"
+  args = ["-y", "@modelcontextprotocol/server-github"]
+  env = {
+    GITHUB_PERSONAL_ACCESS_TOKEN = "$${GITHUB_PERSONAL_ACCESS_TOKEN}"
+  }
 }
 
 # GitHub Copilot Resources
