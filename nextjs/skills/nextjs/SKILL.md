@@ -393,6 +393,55 @@ export default async function Page() {
 }
 ```
 
+## Additional Resources
+
+This skill includes detailed resource files for advanced topics:
+
+### Testing
+- **resources/testing-patterns.md**: Comprehensive testing guide with Vitest, React Testing Library, and Playwright
+  - Server Action testing patterns
+  - Component testing strategies
+  - API route testing
+  - E2E testing with Playwright
+  - Test setup and configuration
+
+### Performance
+- **resources/performance-guide.md**: Performance optimization strategies
+  - Bundle optimization and code splitting
+  - Image and font optimization
+  - Caching strategies
+  - Server Component optimization
+  - Database query optimization
+  - Core Web Vitals monitoring
+
+### Authentication
+- **resources/auth-patterns.md**: Authentication implementation patterns
+  - Auth.js (NextAuth v5) setup
+  - Route protection with middleware
+  - Server Action authentication
+  - Role-based access control
+  - Password reset flows
+  - Multi-factor authentication
+
+### Database
+- **resources/database-integration.md**: Database integration patterns
+  - Prisma setup and patterns
+  - Mongoose with MongoDB
+  - Drizzle ORM
+  - Edge-compatible databases
+  - Query optimization
+  - Migration management
+
+### Deployment
+- **resources/deployment-guide.md**: Production deployment strategies
+  - Vercel deployment
+  - Self-hosted with Docker
+  - AWS deployment options
+  - CI/CD with GitHub Actions
+  - Environment variables
+  - Security checklist
+  - Monitoring and logging
+
 ## External Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)

@@ -1,0 +1,73 @@
+version: "1.0"
+
+tasks:
+  vite-dev:
+    description: "Start Vite development server"
+    command: "npx vite {{if .port}}--port {{.port}}{{end}} {{if .host}}--host {{.host}}{{end}} {{if .open}}--open{{end}} {{.args}}"
+    type: oneshot
+    parameters:
+      port:
+        type: string
+        required: false
+        description: "Port number (default: 5173)"
+      host:
+        type: string
+        required: false
+        description: "Host address (e.g., 0.0.0.0 for network access)"
+      open:
+        type: boolean
+        required: false
+        description: "Open browser on server start"
+      args:
+        type: string
+        required: false
+        description: "Additional arguments (e.g., '--cors --force')"
+
+  vite-build:
+    description: "Build Vite application for production"
+    command: "npx vite build {{if .mode}}--mode {{.mode}}{{end}} {{if .outDir}}--outDir {{.outDir}}{{end}} {{if .sourcemap}}--sourcemap {{.sourcemap}}{{end}} {{.args}}"
+    type: oneshot
+    parameters:
+      mode:
+        type: string
+        required: false
+        description: "Build mode (e.g., production, staging)"
+      outDir:
+        type: string
+        required: false
+        description: "Output directory (default: dist)"
+      sourcemap:
+        type: string
+        required: false
+        description: "Generate sourcemap (true, false, inline, hidden)"
+      args:
+        type: string
+        required: false
+        description: "Additional arguments (e.g., '--minify false')"
+
+  vite-preview:
+    description: "Preview production build locally"
+    command: "npx vite preview {{if .port}}--port {{.port}}{{end}} {{if .host}}--host {{.host}}{{end}} {{if .open}}--open{{end}} {{.args}}"
+    type: oneshot
+    parameters:
+      port:
+        type: string
+        required: false
+        description: "Port number (default: 4173)"
+      host:
+        type: string
+        required: false
+        description: "Host address (e.g., 0.0.0.0 for network access)"
+      open:
+        type: boolean
+        required: false
+        description: "Open browser on server start"
+      args:
+        type: string
+        required: false
+        description: "Additional arguments"
+
+  type-check:
+    description: "Run TypeScript type checking"
+    command: "npx tsc --noEmit"
+    type: oneshot

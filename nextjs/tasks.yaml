@@ -1,6 +1,7 @@
 version: "1.0"
 
 tasks:
+  # Development
   next-dev:
     description: "Start Next.js development server"
     command: "npx next dev {{if .port}}-p {{.port}}{{end}}"
@@ -11,6 +12,7 @@ tasks:
         required: false
         description: "Port number (default: 3000)"
 
+  # Build & Production
   next-build:
     description: "Build Next.js application for production"
     command: "npx next build"
@@ -26,9 +28,15 @@ tasks:
         required: false
         description: "Port number (default: 3000)"
 
+  next-analyze:
+    description: "Analyze Next.js bundle size"
+    command: "ANALYZE=true npx next build"
+    type: oneshot
+
+  # Code Quality
   next-lint:
     description: "Run Next.js ESLint"
-    command: "npx next lint {{.args}}"
+    command: "npx next lint {{if .args}}{{.args}}{{end}}"
     type: oneshot
     parameters:
       args:
@@ -36,7 +44,122 @@ tasks:
         required: false
         description: "Additional arguments for next lint"
 
+  next-lint-fix:
+    description: "Run Next.js ESLint with auto-fix"
+    command: "npx next lint --fix"
+    type: oneshot
+
   type-check:
     description: "Run TypeScript type checking"
     command: "npx tsc --noEmit"
+    type: oneshot
+
+  format:
+    description: "Format code with Prettier"
+    command: "npx prettier --write ."
+    type: oneshot
+
+  format-check:
+    description: "Check code formatting with Prettier"
+    command: "npx prettier --check ."
+    type: oneshot
+
+  validate:
+    description: "Run full validation (type-check, lint, test)"
+    command: "npx tsc --noEmit && npx next lint && npm test"
+    type: oneshot
+
+  # Testing
+  test:
+    description: "Run all tests"
+    command: "npx vitest run"
+    type: oneshot
+
+  test-watch:
+    description: "Run tests in watch mode"
+    command: "npx vitest"
+    type: oneshot
+
+  test-ui:
+    description: "Run tests with UI"
+    command: "npx vitest --ui"
+    type: oneshot
+
+  test-coverage:
+    description: "Run tests with coverage report"
+    command: "npx vitest run --coverage"
+    type: oneshot
+
+  test-e2e:
+    description: "Run E2E tests with Playwright"
+    command: "npx playwright test"
+    type: oneshot
+
+  test-e2e-ui:
+    description: "Run E2E tests with Playwright UI"
+    command: "npx playwright test --ui"
+    type: oneshot
+
+  # Database (Prisma)
+  db-generate:
+    description: "Generate Prisma client"
+    command: "npx prisma generate"
+    type: oneshot
+
+  db-migrate:
+    description: "Run database migrations"
+    command: "npx prisma migrate dev {{if .name}}--name {{.name}}{{end}}"
+    type: oneshot
+    parameters:
+      name:
+        type: string
+        required: false
+        description: "Migration name"
+
+  db-migrate-deploy:
+    description: "Deploy pending migrations to database"
+    command: "npx prisma migrate deploy"
+    type: oneshot
+
+  db-push:
+    description: "Push schema changes to database (skip migrations)"
+    command: "npx prisma db push"
+    type: oneshot
+
+  db-seed:
+    description: "Seed the database"
+    command: "npx prisma db seed"
+    type: oneshot
+
+  db-studio:
+    description: "Open Prisma Studio"
+    command: "npx prisma studio"
+    type: oneshot
+
+  db-reset:
+    description: "Reset database (WARNING: destroys all data)"
+    command: "npx prisma migrate reset"
+    type: oneshot
+
+  # Environment
+  generate-env:
+    description: "Generate .env.local from .env.example"
+    command: "cp .env.example .env.local"
+    type: oneshot
+
+  # Deployment
+  build-analyze:
+    description: "Build and analyze bundle"
+    command: "ANALYZE=true npm run build"
+    type: oneshot
+
+  # Clean
+  clean:
+    description: "Clean build artifacts and dependencies"
+    command: "rm -rf .next node_modules && npm install"
+    type: oneshot
+
+  clean-cache:
+    description: "Clean Next.js cache"
+    command: "rm -rf .next/cache"
     type: oneshot

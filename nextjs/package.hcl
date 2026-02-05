@@ -1,12 +1,23 @@
 package {
   name        = "nextjs"
-  version     = "0.2.1"
+  version     = "0.3.0"
   description = "Next.js 16+ App Router expert: Server/Client Components, Server Actions, API routes, middleware, authentication, and data fetching patterns"
   platforms   = ["claude-code", "github-copilot"]
 }
 
 dependency "typescript" {
   version = "^0.2.0"
+}
+
+# Rules files for consistent conventions
+file "nextjs-conventions" {
+  src  = "rules/nextjs-conventions.md"
+  dest = "CLAUDE.md"
+}
+
+file "nextjs-testing" {
+  src  = "rules/nextjs-testing.md"
+  dest = "CLAUDE.md"
 }
 
 claude_skill "nextjs" {
