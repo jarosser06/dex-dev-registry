@@ -1,6 +1,6 @@
 package {
   name        = "nextjs"
-  version     = "0.2.0"
+  version     = "0.2.1"
   description = "Next.js 16+ App Router expert: Server/Client Components, Server Actions, API routes, middleware, authentication, and data fetching patterns"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -16,7 +16,7 @@ claude_skill "nextjs" {
 
 file "tasks" {
   src  = "tasks.yaml"
-  dest = "nextjs_tasks.yaml"
+  dest = ".mcp_tasks/nextjs_tasks.yaml"
 }
 
 mcp_server "nextjs-tasks" {
@@ -24,7 +24,7 @@ mcp_server "nextjs-tasks" {
   command     = "dev-toolkit-mcp"
   args = [
     "-config",
-    "nextjs_tasks.yaml"
+    ".mcp_tasks/nextjs_tasks.yaml"
   ]
 }
 

@@ -1,6 +1,6 @@
 package {
   name        = "docker-compose"
-  version     = "0.2.2"
+  version     = "0.2.3"
   description = "Docker Compose skill with MCP task automation"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -17,7 +17,7 @@ claude_rule "docker-compose-rule" {
 
 file "tasks" {
   src  = "tasks.yaml"
-  dest = "docker_compose_tasks.yaml"
+  dest = ".mcp_tasks/docker_compose_tasks.yaml"
 }
 
 mcp_server "docker-compose-tasks" {
@@ -25,7 +25,7 @@ mcp_server "docker-compose-tasks" {
   command     = "dev-toolkit-mcp"
   args = [
     "-config",
-    "docker_compose_tasks.yaml"
+    ".mcp_tasks/docker_compose_tasks.yaml"
   ]
 }
 

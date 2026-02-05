@@ -1,0 +1,47 @@
+version: "1.0"
+
+tasks:
+  ruff:
+    description: "Run Ruff linting and formatting checks"
+    command: "uvx ruff {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Arguments for ruff (e.g., 'check .', 'format --check .')"
+
+  black:
+    description: "Run Black code formatter"
+    command: "uvx black {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Arguments for black (e.g., '--check .', '.')"
+
+  isort:
+    description: "Run isort import formatter"
+    command: "uvx isort {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Arguments for isort (e.g., '--check-only .', '.')"
+
+  mypy:
+    description: "Run mypy type checking"
+    command: "uvx mypy {{.args}}"
+    type: oneshot
+    parameters:
+      args:
+        type: string
+        required: false
+        description: "Arguments for mypy (e.g., '--strict .', '.')"
+
+  lint:
+    description: "Run all linting tools in sequence"
+    command: "uvx ruff check . && uvx black --check . && uvx isort --check-only . && uvx mypy ."
+    type: oneshot

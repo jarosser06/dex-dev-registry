@@ -1,6 +1,6 @@
 package {
   name        = "python-dev"
-  version     = "0.2.0"
+  version     = "0.3.1"
   description = "Python development toolkit with style guidelines, type hints, testing patterns, and code quality standards"
   platforms   = ["claude-code", "github-copilot"]
 }
@@ -37,6 +37,32 @@ claude_rules "python" {
 claude_subagent "python-tester" {
   description = "Specialized agent for Python testing, debugging, and test automation"
   content     = file("agents/python-tester.md")
+}
+
+# Task automation via MCP
+file "tasks" {
+  src  = "tasks.yaml"
+  dest = ".mcp_tasks/python_tasks.yaml"
+}
+
+mcp_server "python-tasks" {
+  description = "Python development task automation"
+  command     = "dev-toolkit-mcp"
+  args = [
+    "-config",
+    ".mcp_tasks/python_tasks.yaml"
+  ]
+}
+
+claude_rule "python-tasks-rule" {
+  description = "Enforce MCP usage"
+  content = "You must use the python-tasks MCP tools for all Python linting, formatting, and type checking operations. Never run ruff, mypy, black, or isort commands directly via Bash."
+}
+
+claude_settings "mcp-permissions" {
+  allow = [
+    "mcp__python-tasks__*"
+  ]
 }
 
 # GitHub Copilot Resources
